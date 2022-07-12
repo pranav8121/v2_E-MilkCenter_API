@@ -2,7 +2,7 @@ const date = require('date-and-time');
 const collection = require("../../Schemas/doc_advance");
 
 class clsAdvance {
-    async getAdvance() {
+    async getAdvance(req) {
         try {
             let obj_response = {};
             let now = new Date();
@@ -25,7 +25,7 @@ class clsAdvance {
         }
     };
 
-    async postAdvance() {
+    async postAdvance(req) {
         try {
             let obj_response = {};
             let now = new Date();

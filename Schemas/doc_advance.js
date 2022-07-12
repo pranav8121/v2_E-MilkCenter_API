@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-exports.doc_advance  = mongoose.model('AdvSupply', {
+module.exports  = mongoose.model('AdvSupply', {
     type: { type: String },
     addAmount: { type: Number },
     cutAmount: { type: Number },
