@@ -39,7 +39,6 @@ class clsAdvance {
                 rate: req.rate,
                 bag: req.bag,
                 Name: req.Name,
-                supType: req.supType,
                 UId: req.UId
             };
             let createdData = await collection.create(data);

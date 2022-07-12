@@ -9,6 +9,5 @@ exports.doc_advance  = mongoose.model('AdvSupply', {
     rate: { type: Number },
     bag: { type: Number },
     Name: { type: String },
-    supType:{type: String},
     UId: { type: String }
 });
