@@ -14,6 +14,7 @@ exports.getTodayData = (req, res) => {
             res.send(responseObj);
         });
 };
+
 exports.postData = (req, res) => {
     obj_dailyData.postData(req.body)
         .then((result) => {

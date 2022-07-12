@@ -123,11 +123,10 @@ class clsDailyData {
         let obj_date = {};
         let now = new Date();
         let cur_date = now.getDate();
+        let date = new Date();
         date.setDate(date.getDate() - 10);
         let cur_month = ("0" + (now.getMonth() + 1)).slice(-2)
         let days_in_mon = this.daysInMonth(cur_month, cur_year)
-        let date = new Date();
-
         if (1 <= date <= 10) {
             return Object.assign(obj_date, { from: `01/${cur_month}/${cur_year}` }, { to: `10/${cur_month}/${cur_year}` });
         }
