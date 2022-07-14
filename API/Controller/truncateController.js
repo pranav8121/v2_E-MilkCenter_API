@@ -3,7 +3,7 @@ const obj_data = new clsTruncate();
 
 
 exports.truncateDailyData = (req, res) => {
-    obj_data.truncateDailyData()
+    obj_data.truncateDailyData(req.body)
         .then((result) => {
             res.statusCode = 200;
             res.send(result);

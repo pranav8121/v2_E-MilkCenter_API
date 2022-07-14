@@ -3,7 +3,7 @@ var router = express.Router();
 const truncateController = require('../Controller/truncateController');
 
 
-router.get('/truncateDailyData', truncateController.truncateDailyData);
+router.post('/truncateDailyData', truncateController.truncateDailyData);
 
 
 module.exports = router;
