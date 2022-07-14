@@ -21,6 +21,7 @@ const bill = require('./API/Route/routeBill');
 const advance = require('./API/Route/routeAdvance');
 const dairyData = require('./API/Route/routeDairyData');
 const sales = require('./API/Route/routeSales');
+const truncate = require('./API/Route/routeTruncate');
 
 
 app.use(function (req, res, next) {
@@ -37,8 +38,9 @@ app.use('/API/Member', member);
 app.use('/API/DailyData', dailyData);
 app.use('/API/Bill', bill);
 app.use('/API/Advance', advance);
-app.use('/API/Sales', sales)
-app.use('/API/DairyData', dairyData)
+app.use('/API/Sales', sales);
+app.use('/API/DairyData', dairyData);
+app.use('/API/TruncateCollection',truncate)
 
 
 io.on('connection', (socket) => {

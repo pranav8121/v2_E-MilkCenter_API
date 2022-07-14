@@ -6,7 +6,8 @@ class clsDailyData {
         try {
             let obj_response = {};
             let now = new Date();
-            let today = date.format(now, 'DD-MM-YYYY')
+            let today = date.format(now, 'YYYY-MM-DD');
+            console.log(today);
             let data = {
                 UId: req.UId,
                 hour: req.hour,
