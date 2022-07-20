@@ -16,7 +16,7 @@ class clsAdvance {
                 Object.assign(obj_response, { status: 'success' }, { result: doc });
                 return obj_response;
             } else {
-                Object.assign(obj_response, { status: 'success' }, { result: "NA" });
+                Object.assign(obj_response, { status: 'success' }, { result: "No data found" });
                 return obj_response;
             }
         } catch (err) {
@@ -29,12 +29,12 @@ class clsAdvance {
         try {
             let obj_response = {};
             let now = new Date();
-            let today = date.format(now, 'DD-MM-YYYY');
+            let today = date.format(now, 'YYYY-MM-DD');
             const data = {
                 type: req.type,
                 addAmount: req.addAmount,
                 cutAmount: req.cutAmount,
-                date: new Date(today).toISOString(),
+                date: new Date(today),
                 No: req.No,
                 rate: req.rate,
                 bag: req.bag,

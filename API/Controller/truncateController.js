@@ -15,3 +15,18 @@ exports.truncateDailyData = (req, res) => {
             res.send(responseObj);
         });
 };
+
+exports.truncateAccounts = (req, res) => {
+    obj_data.truncateAccounts(req.body)
+        .then((result) => {
+            res.statusCode = 200;
+            res.send(result);
+        }).catch(err => {
+            console.log(err);
+            res.statusCode = 500;
+            let responseObj = {};
+            Object.assign(responseObj, { status: 'fail' }, { result: err });
+            res.send(responseObj);
+        });
+};
+

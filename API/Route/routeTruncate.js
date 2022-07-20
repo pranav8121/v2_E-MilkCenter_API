@@ -4,6 +4,8 @@ const truncateController = require('../Controller/truncateController');
 
 
 router.post('/truncateDailyData', truncateController.truncateDailyData);
+router.post('/truncateAccounts', truncateController.truncateAccounts);
+
 
 
 module.exports = router;
