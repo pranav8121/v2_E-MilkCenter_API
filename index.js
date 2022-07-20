@@ -14,6 +14,8 @@ var io = require('socket.io')(server, {
 });
 var connectionData = "1234";
 
+const middelware = require('./API/Middelware/checkConnection');
+
 const login = require('./API/Route/routelogin');
 const member = require('./API/Route/routeMember');
 const dailyData = require('./API/Route/routeDailyData');
@@ -30,9 +32,9 @@ app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
     next();
 });
-// app.use(express.json());
 app.use(bodyParser.json());
 app.use(cors());
+app.use(middelware.checkConnection);
 app.use('/API/Login', login);
 app.use('/API/Member', member);
 app.use('/API/DailyData', dailyData);

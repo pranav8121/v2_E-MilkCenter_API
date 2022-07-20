@@ -7,12 +7,11 @@ class clsDailyData {
             let obj_response = {};
             let now = new Date();
             let today = date.format(now, 'YYYY-MM-DD');
-            console.log(today);
             let data = {
                 UId: req.UId,
                 hour: req.hour,
-                date: new Date(today).toISOString()
-            }
+                date: new Date(today)
+            };
             Object.assign(data, {});
             const a = await collection.find(data);
             if (a.length > 0) {
@@ -45,11 +44,10 @@ class clsDailyData {
                 UId: req.UId
             };
             let time = date.format(now, 'HH:mm:ss').toString();
-            let today = date.format(now, 'DD-MM-YYYY');
-            let iFexist = await collection.find({ No: req.No, hour: req.hour, date: new Date(today).toISOString() });
-            Object.assign(data, { date: new Date(today).toISOString() }, { time: time });
+            let today = date.format(now, 'YYYY-MM-DD');
+            let iFexist = await collection.find({ No: req.No, hour: req.hour, UId: req.UId, date: new Date(today) });
+            Object.assign(data, { date: new Date(today) }, { time: time });
             if (iFexist.length == 0) {
-                console.log("Posting Data!");
                 let createdData = await collection.create(data);
                 if (Object.keys(createdData).length !== 0) {
                     Object.assign(obj_response, { status: 'success' }, { result: "Data Added Successfully" });
@@ -76,23 +74,26 @@ class clsDailyData {
             let now = new Date();
             let obj_dates
             if (req.BillDetails == 'current') {
-                obj_dates = this.getCurrentBill()
+                obj_dates = this.getCurrentBill();
+                console.log("Current Dates", obj_dates);
             }
             else if (req.BillDetails == 'last') {
-                obj_dates = this.getLastBill()
+                obj_dates = this.getLastBill();
+                console.log("last Dates", obj_dates);
             }
-            const data={
-                UId:req.UId,
-                No:req.No,
-                date:{$gte:new Date(obj_dates.from).toISOString(),$lte:new Date(obj_dates.to).toISOString()}
+            const from = new Date(obj_dates.from);
+            const to = new Date(obj_dates.to);
+            let data = {
+                UId: req.UId,
+                No: req.No,
+                date: { $gte: from, $lte: to }
             };
-            console.log(new Date(obj_dates.from))
             const doc = await collection.find(data);
             if (doc.length > 0) {
-                Object.assign(obj_response, { status: 'success' }, { result: doc });
+                Object.assign(obj_response, { status: 'success' }, { result: "Data" }, { data: doc });
                 return obj_response;
             } else {
-                Object.assign(obj_response, { status: 'success' }, { result: "NA" });
+                Object.assign(obj_response, { status: 'success' }, { result: "No data" });
                 return obj_response;
             }
         }
@@ -109,33 +110,48 @@ class clsDailyData {
         let cur_month = ("0" + (now.getMonth() + 1)).slice(-2)
         let cur_year = now.getFullYear()
         let days_in_mon = this.daysInMonth(cur_month, cur_year)
-        if (1 <= cur_date <= 10) {
-            return Object.assign(obj_date, { from: `${cur_year}/${cur_month}/01` }, { to: `${cur_year}/${cur_month}/10` });
+        console.log("cur_date", cur_date, "cur_month", cur_month, "cur_year", cur_year);
+        if (1 <= cur_date && cur_date <= 10) {
+            Object.assign(obj_date, { from: `${cur_year}-${cur_month}-01` }, { to: `${cur_year}-${cur_month}-10` });
+            console.log("current1");
+            return obj_date
         }
-        else if (11 <= cur_date <= 20) {
-            return Object.assign(obj_date, { from: `11/${cur_month}/${cur_year}` }, { to: `20/${cur_month}/${cur_year}` });
+        else if (11 <= cur_date && cur_date <= 20) {
+            Object.assign(obj_date, { from: `${cur_year}-${cur_month}-11` }, { to: `${cur_year}-${cur_month}-20` });
+            console.log("current2");
+            return obj_date
         }
-        else if (21 <= cur_date <= 31) {
-            return Object.assign(obj_date, { from: `21/${cur_month}/${cur_year}` }, { to: `${days_in_mon}/${cur_month}/${cur_year}` });
+        else if (21 <= cur_date && cur_date <= 31) {
+            Object.assign(obj_date, { from: `${cur_year}-${cur_month}-21` }, { to: `${cur_year}-${cur_month}-${days_in_mon}` });
+            console.log("current3");
+            return obj_date
         }
     }
 
     getLastBill() {
         let obj_date = {};
         let now = new Date();
-        let cur_date = now.getDate();
         let date = new Date();
         date.setDate(date.getDate() - 10);
-        let cur_month = ("0" + (now.getMonth() + 1)).slice(-2)
-        let days_in_mon = this.daysInMonth(cur_month, cur_year)
-        if (1 <= date <= 10) {
-            return Object.assign(obj_date, { from: `01/${cur_month}/${cur_year}` }, { to: `10/${cur_month}/${cur_year}` });
+        let cur_date = date.getDate();
+        let cur_year = date.getFullYear()
+        let cur_month = ("0" + (date.getMonth() + 1)).slice(-2)
+        let days_in_mon = this.daysInMonth(cur_month, cur_year);
+        console.log(cur_date);
+        if (1 <= cur_date && cur_date <= 10) {
+            Object.assign(obj_date, { from: `${cur_year}-${cur_month}-01` }, { to: `${cur_year}-${cur_month}-10` })
+            console.log("last1");
+            return obj_date;
         }
-        else if (11 <= date <= 20) {
-            return Object.assign(obj_date, { from: `11/${cur_month}/${cur_year}` }, { to: `20/${cur_month}/${cur_year}` });
+        else if (11 <= cur_date && cur_date  <= 20) {
+            Object.assign(obj_date, { from: `${cur_year}-${cur_month}-11` }, { to: `${cur_year}-${cur_month}-20` });
+            console.log("last2");
+            return obj_date;
         }
-        else if (21 <= date <= 31) {
-            console.log("Third");
+        else if (21 <= cur_date && cur_date  <= 31) {
+            console.log("last3");
+            Object.assign(obj_date, { from: `${cur_year}-${cur_month}-21` }, { to: `${cur_year}-${cur_month}-${days_in_mon}` });
+            return obj_date;
         }
     }
 

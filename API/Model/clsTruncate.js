@@ -9,7 +9,6 @@ class clsTruncate {
             let pass = req.pass;
             if (id == "admin" && pass == "8121") {
                 const data = await doc_dailyData.remove({});
-                console.log(data);
                 Object.assign(obj_response, { status: 'success' }, { result: "Truncated SuccesFully!!" });
                 return obj_response;
             } else {

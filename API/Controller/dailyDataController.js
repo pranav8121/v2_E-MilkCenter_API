@@ -7,7 +7,7 @@ exports.getTodayData = (req, res) => {
             res.statusCode = 200;
             res.send(result);
         }).catch(err => {
-            console.log(err);
+            console.log("thhis err",err);
             res.statusCode = 500;
             let responseObj = {};
             Object.assign(responseObj, { status: 'fail' }, { result: err });
