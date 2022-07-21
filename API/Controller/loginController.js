@@ -34,26 +34,17 @@ exports.browserClosed = (req, res) => {
 };
 
 exports.AuthDairy = (req, res) => {
-    Joi.validate(req.body, objLoginSchema.ActivityLogSchema(), (err, value) => {
-        if (err) {
-            res.statusCode = 400;
+    obj_Login.AuthDairy(req.body)
+        .then((result) => {
+            res.statusCode = 200;
+            res.send(result);
+        }).catch(err => {
+            console.log(err);
+            res.statusCode = 500;
             let responseObj = {};
             Object.assign(responseObj, { status: 'fail' }, { result: err });
             res.send(responseObj);
-        } else {
-            obj_Login.AuthDairy(req.body)
-                .then((result) => {
-                    res.statusCode = 200;
-                    res.send(result);
-                }).catch(err => {
-                    console.log(err);
-                    res.statusCode = 500;
-                    let responseObj = {};
-                    Object.assign(responseObj, { status: 'fail' }, { result: err });
-                    res.send(responseObj);
-                })
-        }
-    });
+        });
 };
 
 exports.CreateAuthDairy = (req, res) => {
