@@ -1,8 +1,5 @@
 const clsLogin = require('../Model/clsLogin')
 const obj_Login = new clsLogin();
-const Joi = require('joi');
-const clsLoginShema = require('../ValidateSchema/login.schema');
-const objLoginSchema = new clsLoginShema();
 
 // Dairy AUth
 exports.getallDairyCred = (req, res) => {
